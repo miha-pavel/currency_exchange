@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -128,6 +128,17 @@ LOGOUT_REDIRECT_URL = 'home'
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+
+if DEBUG:
+    INSTALLED_APPS = INSTALLED_APPS + [
+        'debug_toolbar',
+        'django_extensions',
+        ]
+    MIDDLEWARE = MIDDLEWARE + [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        ]
+    INTERNAL_IPS = ['127.0.0.1']
 
 try:
     from currency_exchange.local_conf import * # noqa

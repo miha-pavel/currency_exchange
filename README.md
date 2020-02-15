@@ -49,6 +49,6 @@ Or use makefile guide
 login/logout
 Необходимо добавить функционал
 
-1. [Логин - логаут] / (https://learndjango.com/tutorials/django-login-and-logout-tutorial)
-2. [Регистрация] / (https://learndjango.com/tutorials/django-signup-tutorial)
-3. [Сброс пароля] / (https://learndjango.com/tutorials/django-password-reset-tutorial)
+1. [x] [Логин - логаут] (https://learndjango.com/tutorials/django-login-and-logout-tutorial)
+2. [x] [Регистрация] (https://learndjango.com/tutorials/django-signup-tutorial)
+3. [x] [Сброс пароля] (https://learndjango.com/tutorials/django-password-reset-tutorial)
