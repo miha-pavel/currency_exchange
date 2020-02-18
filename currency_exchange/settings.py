@@ -72,11 +72,21 @@ WSGI_APPLICATION = 'currency_exchange.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        'NAME': 'ce_db',
+        "USER": "ce_user",
+        "PASSWORD": "12345qwerty",
+        "PORT": "5432",
+        "HOST": "localhost",
+    },
 }
 
 
@@ -139,6 +149,15 @@ if DEBUG:
         'debug_toolbar.middleware.DebugToolbarMiddleware',
         ]
     INTERNAL_IPS = ['127.0.0.1']
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
 
 try:
     from currency_exchange.local_conf import * # noqa

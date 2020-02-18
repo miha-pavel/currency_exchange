@@ -36,6 +36,7 @@ Or use makefile guide
 * ```make celery``` - will run celery
 * ```make celery_beat``` - will run celerybeat
 * ```make rabbit``` - will run rabbitmq brocker
+* ```make dc``` - will run docker-compose
 
 
 ## Default super user

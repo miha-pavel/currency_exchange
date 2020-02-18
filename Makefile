@@ -17,10 +17,13 @@ migrate:
 	./manage.py migrate
 
 celery:
-	celery -A students_tracker worker -l info
+	celery -A currency_exchange worker -l info
 
 celery_beat:
-	celery -A students_tracker beat -l info
+	celery -A currency_exchange beat -l info
 
 rabbit:
 	rabbitmq-server
+
+dc:
+	docker-compose -f dc.yml up -d
