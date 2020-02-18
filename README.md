@@ -53,3 +53,10 @@ login/logout
 1. [x] [Логин - логаут] (https://learndjango.com/tutorials/django-login-and-logout-tutorial)
 2. [x] [Регистрация] (https://learndjango.com/tutorials/django-signup-tutorial)
 3. [x] [Сброс пароля] (https://learndjango.com/tutorials/django-password-reset-tutorial)
+
+
+### Домашнее задание 16
+Добавлено: 17.02.2020 11:12
+
+1. Докерезировать [джанго] (https://docs.docker.com/compose/django/) приложение.
+2. Докерезировать селери и селерибит.

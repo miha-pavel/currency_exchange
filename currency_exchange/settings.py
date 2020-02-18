@@ -84,7 +84,8 @@ DATABASES = {
         'NAME': 'ce_db',
         "USER": "ce_user",
         "PASSWORD": "12345qwerty",
-        "PORT": "5432",
+        # use port 5431 not conflict with config on working oneplanetops.inc 
+        "PORT": "5431",
         "HOST": "localhost",
     },
 }
