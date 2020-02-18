@@ -1,6 +1,7 @@
 1. docker-compose -f dc.yml up -d
+Посмотреть активные контейнеры
 2. docker ps -a или docker-compose -f dc.yml ps
-3. docker exec -it rabbitmq bash внутри контейнера работаем втерминале
-
- - pgdata:/usr/local/var/postgres
-       - pgdata:/var/lib/postgresql/data
+внутри контейнера работаем втерминале
+3. docker exec -it rabbitmq bash 
+kill all for Mac
+4. docker ps -q | xargs docker stop ; docker system prune -a

@@ -17,17 +17,27 @@ services:
       - "11211:11211"
 
   postgres:
-    image: postgres:11.3
+    image: postgres:11.6
     container_name: postgres
     restart: always
     ports:
-      - "5431:5431"
+      - "5431:5432"
     environment:
       POSTGRES_PASSWORD: 12345qwerty
       POSTGRES_USER: ce_user
       POSTGRES_DB: ce_db
     volumes:
       - pgdata:/usr/local/var/postgres
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/currency_exchange
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
 
 volumes: 
   pgdata:

@@ -85,8 +85,8 @@ DATABASES = {
         "USER": "ce_user",
         "PASSWORD": "12345qwerty",
         # use port 5431 not conflict with config on working oneplanetops.inc 
-        "PORT": "5431",
-        "HOST": "localhost",
+        "PORT": "5432",
+        "HOST": "postgres",
     },
 }
 
