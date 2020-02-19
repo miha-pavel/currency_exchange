@@ -45,6 +45,26 @@ Or use makefile guide
 * Password: admin
 
 
+## DOCKER commands
+1. Запуск контейнеризации
+```docker-compose -f dc.yml up -d```
+2. Посмотреть активные контейнеры
+```docker ps -a или docker-compose -f dc.yml ps```
+3. Запуск терминала внутри контейнера
+```docker exec -it rabbitmq bash ```
+4. kill all conteiner (for Mac)
+```docker ps -q | xargs docker stop ; docker system prune -a```
+5. Просматриваем информацию о контейнерах
+```docker ps -a```
+6. Просматриваем логи в контейнера.
+    копируем CONTAINER ID полученные, ```docker ps -a``` CONTAINER_ID
+```docker logs <CONTAINER_ID>```
+7. Проинспектировать контейнер c CONTAINER_ID
+```docker inspect <CONTAINER_ID>```
+8. Рестарт отдельного контейнера conteiner_name
+```docker restart <conteiner_name>```
+
+
 ### Домашнее задание 15
 Добавлено: 14.02.2020 16:30
 login/logout
@@ -58,5 +78,5 @@ login/logout
 ### Домашнее задание 16
 Добавлено: 17.02.2020 11:12
 
-1. Докерезировать [джанго] (https://docs.docker.com/compose/django/) приложение.
-2. Докерезировать селери и селерибит.
+1. [x] Докерезировать [джанго] (https://docs.docker.com/compose/django/) приложение.
+2. [x] Докерезировать селери и селерибит.

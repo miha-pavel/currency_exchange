@@ -1,6 +1,7 @@
 version: "3"
 
 services:
+  # RabbitMQ - queue
   rabbitmq:
     image: rabbitmq:3.8-rc-management
     container_name: rabbitmq
@@ -29,8 +30,11 @@ services:
     volumes:
       - pgdata:/usr/local/var/postgres
 
-  web:
+  # Django web server - celery master
+  django:
     build: .
+    container_name: django
+    restart: always
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/currency_exchange
@@ -38,6 +42,33 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
+    links:
+      - rabbitmq
+
+  # Celery worker
+  celery_worker:
+    container_name: celery_worker
+    restart: always
+    build: .
+    command: celery -A currency_exchange worker -l info
+    volumes:
+        - .:/currency_exchange
+    links:
+        - rabbitmq
+    depends_on:
+        - postgres
+        - rabbitmq
+
+  celery_beat:
+    container_name: celery_beat
+    restart: always
+    build: .
+    command: celery -A currency_exchange beat -l info
+    volumes:
+      - .:/currency_exchange
+    depends_on:
+      - postgres
+      - rabbitmq    
 
 volumes: 
   pgdata:

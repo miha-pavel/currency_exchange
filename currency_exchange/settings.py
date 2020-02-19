@@ -160,6 +160,20 @@ CACHES = {
 }
 
 
+# Other Celery settings
+CELERY_TASK_ALWAYS_EAGER = True
+CELERY_ALWAYS_EAGER = True
+# To connect celery conteiner with rabbitmq conteiner
+CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672/%2F'
+CELERY_BEAT_SCHEDULE = {
+    'see-you': {
+        'task': 'students.tasks.see_you',
+        'schedule': 30.0,
+    },
+}
+CELERY_TIMEZONE = 'UTC'
+
+
 try:
     from currency_exchange.local_conf import * # noqa
 except ImportError:
