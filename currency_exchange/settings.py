@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -53,7 +53,7 @@ ROOT_URLCONF = 'currency_exchange.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'account')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,11 +72,22 @@ WSGI_APPLICATION = 'currency_exchange.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        'NAME': 'ce_db',
+        "USER": "ce_user",
+        "PASSWORD": "12345qwerty",
+        # use port 5431 not conflict with config on working oneplanetops.inc 
+        "PORT": "5432",
+        "HOST": "postgres",
+    },
 }
 
 
@@ -120,6 +131,47 @@ STATIC_URL = '/static/'
 
 
 AUTH_USER_MODEL = 'account.User'
+
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+
+if DEBUG:
+    INSTALLED_APPS = INSTALLED_APPS + [
+        'debug_toolbar',
+        'django_extensions',
+        ]
+    MIDDLEWARE = MIDDLEWARE + [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        ]
+    INTERNAL_IPS = ['127.0.0.1']
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+
+# Other Celery settings
+CELERY_TASK_ALWAYS_EAGER = True
+CELERY_ALWAYS_EAGER = True
+# To connect celery conteiner with rabbitmq conteiner
+CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672/%2F'
+CELERY_BEAT_SCHEDULE = {
+    'see-you': {
+        'task': 'students.tasks.see_you',
+        'schedule': 30.0,
+    },
+}
+CELERY_TIMEZONE = 'UTC'
 
 
 try:

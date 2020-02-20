@@ -36,6 +36,7 @@ Or use makefile guide
 * ```make celery``` - will run celery
 * ```make celery_beat``` - will run celerybeat
 * ```make rabbit``` - will run rabbitmq brocker
+* ```make dc``` - will run docker-compose
 
 
 ## Default super user
@@ -44,4 +45,40 @@ Or use makefile guide
 * Password: admin
 
 
-### Домашнее задание 
+## DOCKER commands
+1. Запуск контейнеризации
+```docker-compose up -d```
+2. Посмотреть активные контейнеры
+```docker ps -a или docker-compose ps```
+3. Запуск терминала внутри контейнера
+```docker exec -it rabbitmq bash ```
+4. kill all conteiner (for Mac)
+```docker ps -q | xargs docker stop ; docker system prune -a```
+5. Просматриваем информацию о контейнерах
+```docker ps -a```
+6. Просматриваем логи в контейнера.
+    копируем CONTAINER ID полученные, ```docker ps -a``` CONTAINER_ID
+```docker logs <CONTAINER_ID>```
+7. Проинспектировать контейнер c CONTAINER_ID
+```docker inspect <CONTAINER_ID>```
+8. Рестарт отдельного контейнера conteiner_name
+```docker restart <conteiner_name>```
+9. You can check which values are assigned to the environment variables
+```docker-compose config```
+
+
+### Домашнее задание 15
+Добавлено: 14.02.2020 16:30
+login/logout
+Необходимо добавить функционал
+
+1. [x] [Логин - логаут] (https://learndjango.com/tutorials/django-login-and-logout-tutorial)
+2. [x] [Регистрация] (https://learndjango.com/tutorials/django-signup-tutorial)
+3. [x] [Сброс пароля] (https://learndjango.com/tutorials/django-password-reset-tutorial)
+
+
+### Домашнее задание 16
+Добавлено: 17.02.2020 11:12
+
+1. [x] Докерезировать [джанго] (https://docs.docker.com/compose/django/) приложение.
+2. [x] Докерезировать селери и селерибит.

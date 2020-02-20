@@ -1,0 +1,72 @@
+version: "3"
+
+services:
+  # RabbitMQ - queue
+  rabbitmq:
+    image: rabbitmq:3.8-rc-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  memcached:
+    image: memcached:latest
+    container_name: memcached
+    restart: always
+    ports:
+      - "11211:11211"
+
+  postgres:
+    image: postgres:11.6
+    container_name: postgres
+    restart: always
+    ports:
+      - "5431:5432"
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/usr/local/var/postgres
+
+  # Django web server - celery master
+  django:
+    build: .
+    container_name: django
+    restart: always
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/currency_exchange
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    links:
+      - rabbitmq
+
+  # Celery worker
+  celery_worker:
+    container_name: celery_worker
+    restart: always
+    build: .
+    command: celery -A currency_exchange worker -l info
+    volumes:
+        - .:/currency_exchange
+    links:
+        - rabbitmq
+    depends_on:
+        - postgres
+        - rabbitmq
+
+  celery_beat:
+    container_name: celery_beat
+    restart: always
+    build: .
+    command: celery -A currency_exchange beat -l info
+    volumes:
+      - .:/currency_exchange
+    depends_on:
+      - postgres
+      - rabbitmq    
+
+volumes: 
+  pgdata:
