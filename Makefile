@@ -26,4 +26,4 @@ rabbit:
 	rabbitmq-server
 
 dc:
-	docker-compose -f dc.yml up -d
+	docker-compose up -d
