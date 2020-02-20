@@ -47,9 +47,9 @@ Or use makefile guide
 
 ## DOCKER commands
 1. Запуск контейнеризации
-```docker-compose -f dc.yml up -d```
+```docker-compose up -d```
 2. Посмотреть активные контейнеры
-```docker ps -a или docker-compose -f dc.yml ps```
+```docker ps -a или docker-compose ps```
 3. Запуск терминала внутри контейнера
 ```docker exec -it rabbitmq bash ```
 4. kill all conteiner (for Mac)
@@ -63,6 +63,8 @@ Or use makefile guide
 ```docker inspect <CONTAINER_ID>```
 8. Рестарт отдельного контейнера conteiner_name
 ```docker restart <conteiner_name>```
+9. You can check which values are assigned to the environment variables
+```docker-compose config```
 
 
 ### Домашнее задание 15
