@@ -54,16 +54,14 @@ Or use makefile guide
 ```docker exec -it rabbitmq bash ```
 4. kill all conteiner (for Mac)
 ```docker ps -q | xargs docker stop ; docker system prune -a```
-5. Просматриваем информацию о контейнерах
-```docker ps -a```
-6. Просматриваем логи в контейнера.
+5. Просматриваем логи в контейнера.
     копируем CONTAINER ID полученные, ```docker ps -a``` CONTAINER_ID
 ```docker logs <CONTAINER_ID>```
-7. Проинспектировать контейнер c CONTAINER_ID
+6. Проинспектировать контейнер c CONTAINER_ID
 ```docker inspect <CONTAINER_ID>```
-8. Рестарт отдельного контейнера conteiner_name
+7. Рестарт отдельного контейнера conteiner_name
 ```docker restart <conteiner_name>```
-9. You can check which values are assigned to the environment variables
+8. You can check which values are assigned to the environment variables
 ```docker-compose config```
 
 
