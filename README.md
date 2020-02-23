@@ -49,9 +49,12 @@ Or use makefile guide
 1. Запуск контейнеризации
 ```docker-compose up -d```
 2. Посмотреть активные контейнеры
-```docker ps -a или docker-compose ps```
-3. Запуск терминала внутри контейнера
-```docker exec -it rabbitmq bash ```
+```docker ps -a``` или ```docker-compose ps```
+3. Выполнение команды внутри контейнера
+```docker exec -it <command>```
+   - Например выполнить миграции внутри контейнера
+    ```docker exec -it django ./manage.py makemigrations```
+    ```docker exec -it django ./manage.py migraе```
 4. kill all conteiner (for Mac)
 ```docker ps -q | xargs docker stop ; docker system prune -a```
 5. Просматриваем логи в контейнера.
@@ -63,6 +66,11 @@ Or use makefile guide
 ```docker restart <conteiner_name>```
 8. You can check which values are assigned to the environment variables
 ```docker-compose config```
+9. Выполнить миграции внутри контеейнера
+```docker exec -it django ./manage.py makemigrations```
+```docker exec -it django ./manage.py migraе```
+10. Restart all running containers:
+```docker restart $(docker ps -q)```
 
 
 ### Домашнее задание 15
