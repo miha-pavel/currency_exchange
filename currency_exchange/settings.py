@@ -134,15 +134,15 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 
-# if DEBUG:
-#     INSTALLED_APPS = INSTALLED_APPS + [
-#         'debug_toolbar',
-#         'django_extensions',
-#         ]
-#     MIDDLEWARE = MIDDLEWARE + [
-#         'debug_toolbar.middleware.DebugToolbarMiddleware',
-#         ]
-#     INTERNAL_IPS = ['127.0.0.1']
+if DEBUG:
+    INSTALLED_APPS = INSTALLED_APPS + [
+        'debug_toolbar',
+        'django_extensions',
+        ]
+    MIDDLEWARE = MIDDLEWARE + [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        ]
+    INTERNAL_IPS = ['127.0.0.1']
 
 
 CACHES = {
@@ -153,9 +153,6 @@ CACHES = {
 }
 
 
-# Other Celery settings
-CELERY_TASK_ALWAYS_EAGER = True
-CELERY_ALWAYS_EAGER = True
 # To connect celery conteiner with rabbitmq conteiner
 CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672/%2F'
 CELERY_BEAT_SCHEDULE = {

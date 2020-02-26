@@ -130,3 +130,5 @@ dmypy.json
 
 local_conf.py
 .vscode/
+!.gitkeep
+run/celery*

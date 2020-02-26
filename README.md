@@ -68,7 +68,7 @@ Or use makefile guide
 ```docker-compose config```
 9. Выполнить миграции внутри контеейнера
 ```docker exec -it django ./manage.py makemigrations```
-```docker exec -it django ./manage.py migraе```
+```docker exec -it django ./manage.py migratе```
 10. Restart all running containers:
 ```docker restart $(docker ps -q)```
 
