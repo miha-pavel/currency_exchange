@@ -54,7 +54,9 @@ Or use makefile guide
 ```docker exec -it <command>```
    - Например выполнить миграции внутри контейнера
     ```docker exec -it django ./manage.py makemigrations```
-    ```docker exec -it django ./manage.py migraе```
+    ```docker exec -it django ./manage.py migratе```
+   - Зайти в терминал контейнера джанго
+    ```docker exec -it django bash```
 4. kill all conteiner (for Mac)
 ```docker ps -q | xargs docker stop ; docker system prune -a```
 5. Просматриваем логи в контейнера.

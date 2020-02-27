@@ -73,12 +73,12 @@ WSGI_APPLICATION = 'currency_exchange.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        'NAME': 'ce_db',
-        "USER": "ce_user",
-        "PASSWORD": "12345qwerty",
+        'NAME': os.environ['POSTGRES_DB'],
+        "USER": os.environ['POSTGRES_USER'],
+        "PASSWORD": os.environ['POSTGRES_PASSWORD'],
         # use port 5431 not conflict with config on working oneplanetops.inc 
-        "PORT": "5432",
-        "HOST": "postgres",
+        "PORT": os.environ['POSTGRES_PORT'],
+        "HOST": os.environ['POSTGRES_HOST'],
         # 'HOST': 'localhost',
     },
 }
@@ -148,13 +148,18 @@ if DEBUG:
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+        'LOCATION': f'{os.environ["MEMCACHED_HOST"]}:{os.environ["MEMCACHED_POR"]}',
     }
 }
 
 
 # To connect celery conteiner with rabbitmq conteiner
-CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672/%2F'
+CELERY_BROKER_URL = 'amqp://{}:{}@{}:{}//'.format(
+    os.environ["RABBITMQ_DEFAULT_USER"],
+    os.environ["RABBITMQ_DEFAULT_PASS"],
+    os.environ["RABBITMQ_DEFAULT_HOST"],
+    os.environ["RABBITMQ_DEFAULT_PORT"]
+)
 CELERY_BEAT_SCHEDULE = {
     'parse-rates': {
         'task': 'currency.tasks.parse_rates',
