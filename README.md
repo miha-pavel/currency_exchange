@@ -88,3 +88,14 @@ login/logout
 
 1. [x] Докерезировать [джанго] (https://docs.docker.com/compose/django/) приложение.
 2. [x] Докерезировать селери и селерибит.
+
+
+### Домашнее задание 17
+Добавлено: 21.02.2020 16:53
+Реализовать 5 парсеров
+1. [x] Курс по Монобанк
+2. [x] Курс по сайту http://vkurse.dp.ua/. 
+Для парсинга данных можно использовать
+https://www.crummy.com/software/BeautifulSoup/bs4/doc/.
+https://www.dataquest.io/blog/web-scraping-tutorial-python/
+3. [x] Найти и собрать данные с еще 3х источников.
