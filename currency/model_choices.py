@@ -5,11 +5,12 @@ CURRENCY_CHOICES = (
     (CURR_EUR, 'EUR'),
 )
 
-SR_PRIVAT, SR_MONO, SR_VKURSE, SR_OTP = range(1, 5)
+SR_PRIVAT, SR_MONO, SR_VKURSE, SR_OTP, SR_TAS, = range(1, 6)
 
 SOURCE_CHOICES = (
     (SR_PRIVAT, 'PrivetBank'),
     (SR_MONO, 'MonoBank'),
     (SR_VKURSE, 'Vkurse'),
     (SR_OTP, 'OTP-bank'),
+    (SR_TAS, 'TasCom-bank'),
 )

@@ -54,7 +54,7 @@ Or use makefile guide
 ```docker exec -it <command>```
    - Например выполнить миграции внутри контейнера
     ```docker exec -it django ./manage.py makemigrations```
-    ```docker exec -it django ./manage.py migratе```
+    ```docker exec -it django ./manage.py migrate```
    - Зайти в терминал контейнера джанго
     ```docker exec -it django bash```
 4. kill all conteiner (for Mac)
@@ -68,10 +68,7 @@ Or use makefile guide
 ```docker restart <conteiner_name>```
 8. You can check which values are assigned to the environment variables
 ```docker-compose config```
-9. Выполнить миграции внутри контеейнера
-```docker exec -it django ./manage.py makemigrations```
-```docker exec -it django ./manage.py migratе```
-10. Restart all running containers:
+9. Restart all running containers:
 ```docker restart $(docker ps -q)```
 
 
