@@ -49,9 +49,14 @@ Or use makefile guide
 1. Запуск контейнеризации
 ```docker-compose up -d```
 2. Посмотреть активные контейнеры
-```docker ps -a или docker-compose ps```
-3. Запуск терминала внутри контейнера
-```docker exec -it rabbitmq bash ```
+```docker ps -a``` или ```docker-compose ps```
+3. Выполнение команды внутри контейнера
+```docker exec -it <command>```
+   - Например выполнить миграции внутри контейнера
+    ```docker exec -it django ./manage.py makemigrations```
+    ```docker exec -it django ./manage.py migrate```
+   - Зайти в терминал контейнера джанго
+    ```docker exec -it django bash```
 4. kill all conteiner (for Mac)
 ```docker ps -q | xargs docker stop ; docker system prune -a```
 5. Просматриваем логи в контейнера.
@@ -63,6 +68,12 @@ Or use makefile guide
 ```docker restart <conteiner_name>```
 8. You can check which values are assigned to the environment variables
 ```docker-compose config```
+9. Restart all running containers:
+```docker restart $(docker ps -q)```
+10. Stop или Start отдельных контейнеров,
+    например, сразу два контейнера "celery_worker" и "celery_beat"
+```docker-compose stop celery_worker celery_beat```
+```docker-compose start celery_worker celery_beat```
 
 
 ### Домашнее задание 15
@@ -80,3 +91,14 @@ login/logout
 
 1. [x] Докерезировать [джанго] (https://docs.docker.com/compose/django/) приложение.
 2. [x] Докерезировать селери и селерибит.
+
+
+### Домашнее задание 17
+Добавлено: 21.02.2020 16:53
+Реализовать 5 парсеров
+1. [x] Курс по Монобанк
+2. [x] Курс по сайту http://vkurse.dp.ua/. 
+Для парсинга данных можно использовать
+https://www.crummy.com/software/BeautifulSoup/bs4/doc/.
+https://www.dataquest.io/blog/web-scraping-tutorial-python/
+3. [x] Найти и собрать данные с еще 3х источников.

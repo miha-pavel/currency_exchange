@@ -130,3 +130,7 @@ dmypy.json
 
 local_conf.py
 .vscode/
+.idea/
+!.gitkeep
+run/celery*
+images/
