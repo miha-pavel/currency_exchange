@@ -53,7 +53,7 @@ def _vkurse():
                 'sale': Decimal(rate['sale']),
                 'source': mch.SR_VKURSE,
             }
-            save_rate_data(mch.SR_VKURSE, **rate_kwargs)
+            save_rate_data(mch.SR_VKURSE, rate_kwargs)
 
 
 @shared_task()
@@ -68,7 +68,7 @@ def _mono():
             'buy': rate.get("rateBuy"),
             'source': mch.SR_MONO,
         }
-        save_rate_data(mch.SR_MONO, **rate_kwargs)
+        save_rate_data(mch.SR_MONO, rate_kwargs)
 
 
 @shared_task()
@@ -87,7 +87,7 @@ def _otp_bank():
                 'sale': Decimal(rate['SELL']),
                 'source': mch.SR_OTP,
             }
-            save_rate_data(mch.SR_OTP, **rate_kwargs)
+            save_rate_data(mch.SR_OTP, rate_kwargs)
 
 
 @shared_task()
@@ -107,7 +107,7 @@ def _tascom_bank():
                 'sale': Decimal(rate['kurs_sale']),
                 'source': mch.SR_TAS,
             }
-            save_rate_data(mch.SR_TAS, **rate_kwargs)
+            save_rate_data(mch.SR_TAS, rate_kwargs)
 
 
 @shared_task()
