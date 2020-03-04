@@ -133,3 +133,4 @@ local_conf.py
 .idea/
 !.gitkeep
 run/celery*
+images/

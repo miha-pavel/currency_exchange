@@ -1,5 +1,7 @@
 import os
 
+from django.urls import reverse_lazy
+
 from celery.schedules import crontab
 
 
@@ -168,6 +170,10 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 CELERY_TIMEZONE = 'UTC'
+
+
+LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
 
 try:

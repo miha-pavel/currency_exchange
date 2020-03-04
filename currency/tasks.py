@@ -2,16 +2,19 @@ from decimal import Decimal
 
 import requests
 from celery import shared_task
-from bs4 import BeautifulSoup
 
 from currency.models import Rate
 from currency import model_choices as mch
 
 
-def get_soup(url):
-    response = requests.get(url)
-    html = response.text
-    return BeautifulSoup(html, 'html.parser')
+def save_rate_data(source, rate_kwargs):
+    new_rate = Rate(**rate_kwargs)
+    last_rate = Rate.objects.filter(
+        currency=rate_kwargs['currency'],
+        source=source,
+        ).last()
+    if last_rate is None or (new_rate.buy != last_rate.buy or new_rate.sale != last_rate.sale):
+        new_rate.save()
 
 
 @shared_task()
@@ -30,13 +33,8 @@ def _privat():
                 'sale': Decimal(rate['sale']),
                 'source': mch.SR_PRIVAT,
             }
-            new_rate = Rate(**rate_kwargs)
-            last_rate = Rate.objects.filter(
-                currency=currency,
-                source=mch.SR_PRIVAT
-                ).last()
-            if last_rate is None or (new_rate.buy != last_rate.buy or new_rate.sale != last_rate.sale):
-                new_rate.save()
+            save_rate_data(mch.SR_PRIVAT, rate_kwargs)
+
 
 
 @shared_task()
@@ -55,13 +53,7 @@ def _vkurse():
                 'sale': Decimal(rate['sale']),
                 'source': mch.SR_VKURSE,
             }
-            new_rate = Rate(**rate_kwargs)
-            last_rate = Rate.objects.filter(
-                currency=currency,
-                source=mch.SR_VKURSE
-                ).last()
-            if last_rate is None or (new_rate.buy != last_rate.buy or new_rate.sale != last_rate.sale):
-                new_rate.save()
+            save_rate_data(mch.SR_VKURSE, **rate_kwargs)
 
 
 @shared_task()
@@ -69,37 +61,14 @@ def _mono():
     url = 'https://api.monobank.ua/bank/currency'
     response = requests.get(url)
     for index, rate in enumerate(response.json()[:2]):
-        currency = index+1
+        currency = index + 1
         rate_kwargs = {
             'currency': currency,
             'sale': rate.get("rateSell"),
             'buy': rate.get("rateBuy"),
             'source': mch.SR_MONO,
         }
-        new_rate = Rate(**rate_kwargs)
-        last_rate = Rate.objects.filter(
-            currency=currency,
-            source=mch.SR_MONO
-            ).last()
-        if last_rate is None or (new_rate.buy != last_rate.buy or new_rate.sale != last_rate.sale):
-            new_rate.save()
-
-
-@shared_task()
-def _ukrsib():
-    url = 'https://my.ukrsibbank.com/ua/personal/operations/currency_exchange/'
-    soup = get_soup(url)
-    exchange_rate = soup.findAll("table", {"class": "currency__table"})
-    table_body = exchange_rate[0].find('tbody')
-    rows = table_body.findAll('tr')
-    data = []
-    for row in rows:
-        cols = row.findAll('td')
-        cols = [ele.text.strip() for ele in cols]
-        data.append([ele for ele in cols if ele])
-    print('data: ', data)
-    for item in data:
-        print(item)
+        save_rate_data(mch.SR_MONO, **rate_kwargs)
 
 
 @shared_task()
@@ -118,13 +87,7 @@ def _otp_bank():
                 'sale': Decimal(rate['SELL']),
                 'source': mch.SR_OTP,
             }
-            new_rate = Rate(**rate_kwargs)
-            last_rate = Rate.objects.filter(
-                currency=currency,
-                source=mch.SR_OTP
-                ).last()
-            if last_rate is None or (new_rate.buy != last_rate.buy or new_rate.sale != last_rate.sale):
-                new_rate.save()
+            save_rate_data(mch.SR_OTP, **rate_kwargs)
 
 
 @shared_task()
@@ -144,13 +107,7 @@ def _tascom_bank():
                 'sale': Decimal(rate['kurs_sale']),
                 'source': mch.SR_TAS,
             }
-            new_rate = Rate(**rate_kwargs)
-            last_rate = Rate.objects.filter(
-                currency=currency,
-                source=mch.SR_TAS
-                ).last()
-            if last_rate is None or (new_rate.buy != last_rate.buy or new_rate.sale != last_rate.sale):
-                new_rate.save()
+            save_rate_data(mch.SR_TAS, **rate_kwargs)
 
 
 @shared_task()

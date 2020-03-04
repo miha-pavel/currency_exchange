@@ -70,6 +70,10 @@ Or use makefile guide
 ```docker-compose config```
 9. Restart all running containers:
 ```docker restart $(docker ps -q)```
+10. Stop или Start отдельных контейнеров,
+    например, сразу два контейнера "celery_worker" и "celery_beat"
+```docker-compose stop celery_worker celery_beat```
+```docker-compose start celery_worker celery_beat```
 
 
 ### Домашнее задание 15
