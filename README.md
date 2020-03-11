@@ -74,6 +74,8 @@ Or use makefile guide
     например, сразу два контейнера "celery_worker" и "celery_beat"
 ```docker-compose stop celery_worker celery_beat```
 ```docker-compose start celery_worker celery_beat```
+11. Посмотреть какие имеджи запущенны
+```docker images```
 
 
 ### Домашнее задание 15

@@ -14,9 +14,6 @@ class Contact(models.Model):
     title = models.CharField(max_length=50)
     text = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
-    message_file = models.FileField(
-        blank=True, null=True,
-        upload_to='messages/')
 
     class Meta:
         verbose_name = "Contact"
