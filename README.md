@@ -74,6 +74,8 @@ Or use makefile guide
     например, сразу два контейнера "celery_worker" и "celery_beat"
 ```docker-compose stop celery_worker celery_beat```
 ```docker-compose start celery_worker celery_beat```
+11. Посмотреть какие имеджи запущенны
+```docker images```
 
 
 ### Домашнее задание 15
@@ -102,3 +104,21 @@ login/logout
 https://www.crummy.com/software/BeautifulSoup/bs4/doc/.
 https://www.dataquest.io/blog/web-scraping-tutorial-python/
 3. [x] Найти и собрать данные с еще 3х источников.
+
+
+### Домашнее задание 18
+Добавлено: 01.03.2020 19:52
+Добавить форму обартной связи
+1. [x] Форма должна иметь три поля: email, title, text
+2. [x] Письмо должно быть отправленно с помощью celery
+3. [x] Записывать каждое отправленное письмо в базу данных. Модель Contact. Поля: email, title, text, created (время создания записи)
+4. [x] Использовать Class Based Views
+
+
+https://riptutorial.com/ru/django/example/11709/django-class-based-views--%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80-createview
+
+
+https://ccbv.co.uk/
+
+
+https://ccbv.co.uk/projects/Django/3.0/django.views.generic.edit/CreateView/

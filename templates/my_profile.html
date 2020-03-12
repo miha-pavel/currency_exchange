@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}My profile{% endblock %}
+
+{% block content %}
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="my_profile">
+      <from>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+{% endblock content %}
+
+

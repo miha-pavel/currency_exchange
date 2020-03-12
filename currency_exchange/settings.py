@@ -123,6 +123,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 
 AUTH_USER_MODEL = 'account.User'
@@ -165,8 +168,8 @@ CELERY_BROKER_URL = 'amqp://{}:{}@{}:{}//'.format(
 CELERY_BEAT_SCHEDULE = {
     'parse-rates': {
         'task': 'currency.tasks.parse_rates',
-        # 'schedule': crontab(minute='*/15'),
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(minute='*/15'),
+        # 'schedule': crontab(minute='*/1'),
     },
 }
 CELERY_TIMEZONE = 'UTC'

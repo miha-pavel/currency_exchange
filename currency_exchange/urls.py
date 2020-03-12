@@ -8,12 +8,16 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('django.contrib.auth.urls')),
     path('account/', include('account.urls')),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    # path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', TemplateView.as_view(template_name='index.html'), name='index'),
 ]
 
 
-# if settings.DEBUG:
-#     import debug_toolbar
-#     urlpatterns = [
-#         path('__debug__/', include(debug_toolbar.urls)),
-#     ] + urlpatterns
+if settings.DEBUG:
+    import debug_toolbar
+    from django.conf.urls.static import static
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]\
+        + urlpatterns\
+        + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

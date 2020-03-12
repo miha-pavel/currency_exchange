@@ -1,5 +1,5 @@
 FROM python:3.7.6
-# ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED 1
 RUN apt-get update && apt-get install -y\
     python-dev \
     python-setuptools \

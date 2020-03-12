@@ -39,7 +39,7 @@ services:
     restart: always
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./:/currency_exchange
+      - .:/currency_exchange
     ports:
       - "8000:8000"
       - "8001:8001"
@@ -50,6 +50,7 @@ services:
       - memcached
       - rabbitmq
     links:
+      - postgres
       - rabbitmq
 
   # Celery worker
@@ -59,7 +60,7 @@ services:
     build: .
     command: /bin/bash ./commands/start_celery.sh
     volumes:
-        - ./:/currency_exchange
+        - .:/currency_exchange
     env_file:
       - .env
     links:
