@@ -72,7 +72,7 @@ Or use makefile guide
 ```docker restart $(docker ps -q)```
 10. Stop или Start отдельных контейнеров,
     например, сразу два контейнера "celery_worker" и "celery_beat"
-```docker-compose stop celery_worker celery_beat```
+```docker-compose stop celery_beat```
 ```docker-compose start celery_worker celery_beat```
 11. Посмотреть какие имеджи запущенны
 ```docker images```
@@ -122,3 +122,18 @@ https://ccbv.co.uk/
 
 
 https://ccbv.co.uk/projects/Django/3.0/django.views.generic.edit/CreateView/
+
+
+### Домашнее задание 19
+Добавлено: 06.03.2020 19:29
+Реализовать функционал
+1. [x] Добавить вкладку слева Latest Rates
+2. [x] Вывести последние 20 записей из таблицы Rate использовав bootstrap таблицу. [x] Таблицу выбрать самостоятельно.
+3. [x] Необходимо использовать cbv ListView.
+
+
+Дополнительно задание.
+
+Добавить вкладки login/logout/my profile
+
+Добавить возможность редактировать только свой профиль. Вкладки logout/my profile должны быть доступны только для залогиненых юзеров. Login только для анонимных пользователей
