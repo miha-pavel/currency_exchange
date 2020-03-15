@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}RATE LIST{% endblock title %}
+{% block content %}
+    <h1>RATE LIST</h1>
+    <table class="table table-striped rates">
+        <thead>
+            <tr>
+                <th scope="col">Currency</th>
+                <th scope="col">Buy</th>
+                <th scope="col">Sale</th>
+                <th scope="col">Source</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rate in object_list %}
+                <tr>
+                    <td>{{ rate.get_currency_display }}</td>
+                    <td>{{ rate.buy }}</td>
+                    <td>{{ rate.sale }}</td>
+                    <td>{{ rate.get_source_display }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if is_paginated %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+{% endblock content %}
