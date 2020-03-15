@@ -8,7 +8,5 @@ from .models import User
 # Register your models here.
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    add_form = CustomUserCreationForm
-    form = CustomUserChangeForm
-    model = User
-    list_display = ['email', 'username', ]
+    fields = ['email', 'username', 'is_active', 'avatar']
+    fieldsets = None

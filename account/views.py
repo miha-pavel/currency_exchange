@@ -18,6 +18,10 @@ class MyProfile(UpdateView):
     fields = ('email', )
     success_url = reverse_lazy('index')
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(id=self.request.user.id)
+
 
 class ContactView(CreateView):
     template_name = 'contact.html'

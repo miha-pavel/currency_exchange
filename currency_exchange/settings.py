@@ -128,11 +128,15 @@ STATICFILES_DIRS = [
 ]
 
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
 AUTH_USER_MODEL = 'account.User'
 
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'
 
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
@@ -168,15 +172,15 @@ CELERY_BROKER_URL = 'amqp://{}:{}@{}:{}//'.format(
 CELERY_BEAT_SCHEDULE = {
     'parse-rates': {
         'task': 'currency.tasks.parse_rates',
-        'schedule': crontab(minute='*/15'),
-        # 'schedule': crontab(minute='*/1'),
+        # 'schedule': crontab(minute='*/15'),
+        'schedule': crontab(minute='*/1'),
     },
 }
 CELERY_TIMEZONE = 'UTC'
 
 
-LOGIN_REDIRECT_URL = reverse_lazy('home')
-LOGOUT_REDIRECT_URL = reverse_lazy('home')
+LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 
 try:
