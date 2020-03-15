@@ -5,7 +5,8 @@ from django.db import models
 
 def avatar_path(instance, file_name):
     ext = file_name.split('.')[-1]
-    filename = f'{str(uuid4)}.{ext}'
+    filename = f'{str(uuid4())}.{ext}'
+    print('filename: ', '/'.join(['avatar', filename]))
     return '/'.join(['avatar', filename])
 
 
