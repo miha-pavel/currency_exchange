@@ -1,20 +1,12 @@
 from decimal import Decimal
+from datetime import datetime, timedelta
 
 import requests
 from celery import shared_task
 
-from currency.models import Rate
 from currency import model_choices as mch
-
-
-def save_rate_data(source, rate_kwargs):
-    new_rate = Rate(**rate_kwargs)
-    last_rate = Rate.objects.filter(
-        currency=rate_kwargs['currency'],
-        source=source,
-        ).last()
-    if last_rate is None or (new_rate.buy != last_rate.buy or new_rate.sale != last_rate.sale):
-        new_rate.save()
+from .utils import save_rate_data
+from .models import Rate
 
 
 @shared_task()
@@ -35,6 +27,30 @@ def _privat():
             }
             save_rate_data(mch.SR_PRIVAT, rate_kwargs)
 
+@shared_task()
+def _privat_4_years():
+    i = 1
+    days = 365*4
+    while i <= days:
+        current_date = datetime.now()-timedelta(days=1)
+        str_current_date = current_date.strftime('%d.%m.%Y')
+        url = f'https://api.privatbank.ua/p24api/exchange_rates?json&date={str_current_date}'
+        response = requests.get(url)
+        for rate in response.json()["exchangeRate"]:
+            if rate.get('currency') in {'USD', 'EUR'}:
+                currency = {
+                    'USD': mch.CURR_USD,
+                    'EUR': mch.CURR_EUR,
+                }[rate['currency']]
+                rate_kwargs = {
+                    'currency': currency,
+                    'buy': Decimal(rate['purchaseRate']),
+                    'sale': Decimal(rate['saleRate']),
+                    'source': mch.SR_PRIVAT,
+                }
+                save_rate_data(mch.SR_PRIVAT, rate_kwargs)
+                Rate.objects.filter(pk=Rate.objects.last().pk).update(created=current_date.date())
+        i += 1
 
 
 @shared_task()
