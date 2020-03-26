@@ -45,6 +45,7 @@ Or use makefile guide
 * Password: admin
 
 
+
 ## DOCKER commands
 1. Запуск контейнеризации
 ```docker-compose up -d```
@@ -55,6 +56,7 @@ Or use makefile guide
    - Например выполнить миграции внутри контейнера
     ```docker exec -it django ./manage.py makemigrations```
     ```docker exec -it django ./manage.py migrate```
+    ```docker exec -it django ./manage.py createsuperuser```
    - Зайти в терминал контейнера джанго
     ```docker exec -it django bash```
 4. kill all conteiner (for Mac)
@@ -147,3 +149,15 @@ https://ccbv.co.uk/projects/Django/3.0/django.views.generic.edit/CreateView/
 2. [x] Написать команду которая спарсит курс за последние 4 года и запишет в базу. Проследить за полем created.
 
 (https://api.privatbank.ua/#p24/exchangeArchive)
+
+
+### Домашнее задание 22
+Добавлено: 23.03.2020 11:21
+Создать флоу реистрации с помощью СМС.
+Сделать задание в отдельной ветке. Пул реквест НЕ мерджить.
+
+1. [x] Форма регистрации должна содержать след. поля: email, username, phone, password, password2
+2. [x] Создать модель ActivationCodeSMS.
+3. [x] Форма подтверждения кода.
+
+Код должен содержать не менее 4х случайных целых числа.

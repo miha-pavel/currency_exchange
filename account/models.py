@@ -1,10 +1,12 @@
 from uuid import uuid4
 from datetime import datetime
+from random import randint
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.validators import RegexValidator
 
-from .tasks import send_activation_code_async
+from .tasks import send_activation_code_async, send_activation_sms_code_async
 
 
 def avatar_path(instance, file_name):
@@ -15,7 +17,10 @@ def avatar_path(instance, file_name):
 
 
 class User(AbstractUser):
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999999'. Up to 15 digits allowed.")
+    
     avatar = models.ImageField(upload_to=avatar_path, null=True, blank=True, default=None)
+    phone = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validators should be a list
 
     def __str__(self):
         return self.username
@@ -48,3 +53,19 @@ class ActivationCode(models.Model):
 
     def send_activation_code(self):
         send_activation_code_async.delay(self.user.email, self.code)
+
+
+class ActivationCodeSMS(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='activation_sms_codes')
+    created = models.DateTimeField(auto_now_add=True)
+    code = models.PositiveSmallIntegerField(default=randint(1000, 32767))
+    is_activated = models.BooleanField(default=False)
+
+    @property
+    def is_expired(self):
+        now = datetime.now()
+        diff = now - self.created
+        return diff.days > 7
+
+    def send_activation_sms_code(self):
+        send_activation_sms_code_async.delay(self.user.phone, self.code)

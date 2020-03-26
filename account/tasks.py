@@ -4,6 +4,8 @@ from django.urls import reverse
 
 from celery import shared_task
 
+from .send_sms import send_sms
+
 
 @shared_task()
 def send_mail_task(**kwargs):
@@ -25,3 +27,8 @@ def send_activation_code_async(email_to, code):
         [email_to],
         fail_silently=False,
     )
+
+
+@shared_task()
+def send_activation_sms_code_async(phone, code):
+    send_sms(phone, code)

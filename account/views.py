@@ -3,7 +3,7 @@ from django.views.generic import UpdateView, CreateView, View
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import CustomUserCreationForm, SignUpForm
+from .forms import CustomUserCreationForm, SignUpForm, SignUpSMSForm
 from .tasks import send_mail_task
 from .models import User, Contact, ActivationCode
 
@@ -42,8 +42,15 @@ class ContactView(CreateView):
 class SignUpDimaView(CreateView):
     template_name = 'signup.html'
     queryset = User.objects.all()
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('login')
     form_class = SignUpForm
+
+
+class SignUpSMSView(CreateView):
+    template_name = 'signup.html'
+    queryset = User.objects.all()
+    success_url = reverse_lazy('login')
+    form_class = SignUpSMSForm
 
 
 class Activate(View):
