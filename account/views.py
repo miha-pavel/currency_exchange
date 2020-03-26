@@ -35,3 +35,16 @@ class ContactView(CreateView):
             message=form.cleaned_data.get('text'),
             from_email=form.cleaned_data.get('email'))
         return super().form_valid(form)
+    
+class ContactView(CreateView):
+    template_name = 'signup.html'
+    model = Contact
+    fields = ('email', 'title', 'text')
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        send_mail_task.delay(
+            subject=form.cleaned_data.get('title'),
+            message=form.cleaned_data.get('text'),
+            from_email=form.cleaned_data.get('email'))
+        return super().form_valid(form)
