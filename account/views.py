@@ -1,9 +1,11 @@
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView, CreateView
+from django.views.generic import UpdateView, CreateView, View
+from django.http import HttpResponse, Http404
+from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, SignUpForm
 from .tasks import send_mail_task
-from .models import User, Contact
+from .models import User, Contact, ActivationCode
 
 
 class SignUpView(CreateView):
@@ -35,16 +37,29 @@ class ContactView(CreateView):
             message=form.cleaned_data.get('text'),
             from_email=form.cleaned_data.get('email'))
         return super().form_valid(form)
-    
-class ContactView(CreateView):
-    template_name = 'signup.html'
-    model = Contact
-    fields = ('email', 'title', 'text')
-    success_url = reverse_lazy('index')
 
-    def form_valid(self, form):
-        send_mail_task.delay(
-            subject=form.cleaned_data.get('title'),
-            message=form.cleaned_data.get('text'),
-            from_email=form.cleaned_data.get('email'))
-        return super().form_valid(form)
+
+class SignUpDimaView(CreateView):
+    template_name = 'signup.html'
+    queryset = User.objects.all()
+    success_url = reverse_lazy('index')
+    form_class = SignUpForm
+
+
+class Activate(View):
+    def get(self, request, activation_code):
+        ac = get_object_or_404(
+            ActivationCode.objects.select_related('user'),
+            code=activation_code, is_activated=False,
+        )
+
+        if ac.is_expired:
+            raise Http404
+
+        ac.is_activated = True
+        ac.save(update_fields=['is_activated'])
+
+        user = ac.user
+        user.is_active = True
+        user.save(update_fields=['is_active'])
+        return redirect('index')

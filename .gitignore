@@ -134,3 +134,4 @@ local_conf.py
 !.gitkeep
 run/celery*
 images/
+media/

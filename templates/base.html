@@ -29,10 +29,13 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
-      <span class="d-block d-lg-none">{{request.user.get_full_name}}</span>
-      <span class="d-none d-lg-block">
-        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{ request.user.avatar.url }}" alt="">
-      </span>
+      <span class="d-block d-lg-none">{{ request.user.get_full_name }}</span>
+      {% if request.user.is_authenticated and request.user.avatar %}
+        <span class="d-none d-lg-block">
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2"
+              src="{{ request.user.avatar.url }}" alt="">
+        </span>
+      {% endif %}
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -45,21 +48,27 @@
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="{% url 'rate_csv' %}">Download Rates</a>
         </li>
-        {% comment %} <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="{% url 'my_profile' pk=request.user.id %}">My profile</a>
-        </li> {% endcomment %}
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="{% url 'contact' %}">Contact</a>
         </li>
-        {% if request.user.is_authenticated%}
+        {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{% url 'logout' %}">Logout</a>
+            <a class="nav-link" href="{% url 'my_profile' request.user.id %}">My profile</a>
           </li>
-        {%else%}
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{% url 'login' %}">Login</a>
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
           </li>
-        {%endif%}
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">SignUp</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup_d' %}">SignUpDima</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </nav>
