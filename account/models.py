@@ -1,6 +1,10 @@
 from uuid import uuid4
+from datetime import datetime
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+
+from .tasks import send_activation_code_async
 
 
 def avatar_path(instance, file_name):
@@ -29,3 +33,18 @@ class Contact(models.Model):
 
     def __str__(self):
         return f'{self.email}'
+
+class ActivationCode(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='activation_codes')
+    created = models.DateTimeField(auto_now_add=True)
+    code = models.UUIDField(default=uuid4, editable=False, unique=True)
+    is_activated = models.BooleanField(default=False)
+
+    @property
+    def is_expired(self):
+        now = datetime.now()
+        diff = now - self.created
+        return diff.days > 7
+
+    def send_activation_code(self):
+        send_activation_code_async.delay(self.user.email, self.code)
