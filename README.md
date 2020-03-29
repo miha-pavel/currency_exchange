@@ -55,6 +55,7 @@ Or use makefile guide
    - Например выполнить миграции внутри контейнера
     ```docker exec -it django ./manage.py makemigrations```
     ```docker exec -it django ./manage.py migrate```
+    ```docker exec -it django ./manage.py createsuperuser```
    - Зайти в терминал контейнера джанго
     ```docker exec -it django bash```
 4. kill all conteiner (for Mac)
@@ -147,3 +148,10 @@ https://ccbv.co.uk/projects/Django/3.0/django.views.generic.edit/CreateView/
 2. [x] Написать команду которая спарсит курс за последние 4 года и запишет в базу. Проследить за полем created.
 
 (https://api.privatbank.ua/#p24/exchangeArchive)
+
+### Домашнее задание 23
+Добавлено: 27.03.2020 14:14
+Реализовать функционал
+1. [x] Добавить фильтрацию на вью /rates/ GET. Поля для фильтрации: created - exact, lt, lte, gt, gte + BONUS range, source - exact, currency - exact
+2. [x] Реалтзовать функционал для ContactUs модели по аналогии rates. Отсылать письмо при сохранении обькта в базу. Показывать только записи связанные с request юзером.
+3. [x] BONUS, добавть юнит тесты для АПИ.
