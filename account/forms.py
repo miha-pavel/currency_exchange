@@ -73,3 +73,9 @@ class SignUpSMSForm(forms.ModelForm):
         activation_code = user.activation_sms_codes.create()
         activation_code.send_activation_sms_code()
         return user
+
+class ConfirmSMSCodeForm(forms.Form):
+    sms_code = forms.CharField()
+
+class ActivateForm(forms.Form):
+    sms_code = forms.CharField()

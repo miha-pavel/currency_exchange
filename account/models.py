@@ -39,8 +39,12 @@ class Contact(models.Model):
     def __str__(self):
         return f'{self.email}'
 
+
 class ActivationCode(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='activation_codes')
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='activation_codes')
     created = models.DateTimeField(auto_now_add=True)
     code = models.UUIDField(default=uuid4, editable=False, unique=True)
     is_activated = models.BooleanField(default=False)
@@ -56,7 +60,10 @@ class ActivationCode(models.Model):
 
 
 class ActivationCodeSMS(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='activation_sms_codes')
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='activation_sms_codes')
     created = models.DateTimeField(auto_now_add=True)
     code = models.PositiveSmallIntegerField(default=randint(1000, 32767))
     is_activated = models.BooleanField(default=False)
