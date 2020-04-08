@@ -70,12 +70,9 @@ class SignUpSMSForm(forms.ModelForm):
         user.set_password(self.cleaned_data['password'])  # password should be hashed!
         user.is_active = False   # user cannot login
         user.save()
-        activation_code = user.activation_sms_codes.create()
-        activation_code.send_activation_sms_code()
+        sms_code = user.activation_sms_codes.create()
+        sms_code.send_activation_sms_code()
         return user
 
 class ConfirmSMSCodeForm(forms.Form):
-    sms_code = forms.CharField()
-
-class ActivateForm(forms.Form):
     sms_code = forms.CharField()

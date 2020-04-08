@@ -30,5 +30,5 @@ def send_activation_code_async(email_to, code):
 
 
 @shared_task()
-def send_activation_sms_code_async(phone, code):
+def send_sms_code(phone, code):
     send_sms(phone, code)

@@ -49,8 +49,12 @@ class SignUpDimaView(CreateView):
 class SignUpSMSView(CreateView):
     template_name = 'signup.html'
     queryset = User.objects.all()
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('confirm_sms')
     form_class = SignUpSMSForm
+
+    def get_success_url(self):
+        self.request.session['user_id'] = self.object.id
+        return super().get_success_url()
 
 
 class Activate(View):

@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import RegexValidator
 
-from .tasks import send_activation_code_async, send_activation_sms_code_async
+from .tasks import send_activation_code_async, send_sms_code
 
 
 def avatar_path(instance, file_name):
@@ -75,4 +75,4 @@ class ActivationCodeSMS(models.Model):
         return diff.days > 7
 
     def send_activation_sms_code(self):
-        send_activation_sms_code_async.delay(self.user.phone, self.code)
+        send_sms_code.delay(self.user.phone, self.code)
