@@ -8,5 +8,5 @@ from .models import User
 # Register your models here.
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    fields = ['email', 'username', 'is_active', 'avatar']
+    fields = ['email', 'username', 'phone', 'is_active', 'avatar']
     fieldsets = None

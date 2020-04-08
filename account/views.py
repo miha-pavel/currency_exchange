@@ -1,11 +1,11 @@
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView, CreateView, View
+from django.views.generic import UpdateView, CreateView, View, FormView
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import CustomUserCreationForm, SignUpForm
+from .forms import CustomUserCreationForm, SignUpForm, SignUpSMSForm, ConfirmSMSCodeForm
 from .tasks import send_mail_task
-from .models import User, Contact, ActivationCode
+from .models import User, Contact, ActivationCode, ActivationCodeSMS
 
 
 class SignUpView(CreateView):
@@ -42,8 +42,19 @@ class ContactView(CreateView):
 class SignUpDimaView(CreateView):
     template_name = 'signup.html'
     queryset = User.objects.all()
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('login')
     form_class = SignUpForm
+
+
+class SignUpSMSView(CreateView):
+    template_name = 'signup.html'
+    queryset = User.objects.all()
+    success_url = reverse_lazy('confirm_sms')
+    form_class = SignUpSMSForm
+
+    def get_success_url(self):
+        self.request.session['user_id'] = self.object.id
+        return super().get_success_url()
 
 
 class Activate(View):
@@ -51,6 +62,36 @@ class Activate(View):
         ac = get_object_or_404(
             ActivationCode.objects.select_related('user'),
             code=activation_code, is_activated=False,
+        )
+
+        if ac.is_expired:
+            raise Http404
+
+        ac.is_activated = True
+        ac.save(update_fields=['is_activated'])
+
+        user = ac.user
+        user.is_active = True
+        user.save(update_fields=['is_active'])
+        return redirect('index')
+
+
+class ConfirmSMSCodeView(FormView):
+    form_class = ConfirmSMSCodeForm
+    template_name = 'signup.html'
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     super().dispatch()
+
+    def post(self, request):
+        user_id = request.session['user_id']
+        sms_code = request.POST['sms_code']
+
+        ac = get_object_or_404(
+            ActivationCodeSMS.objects.select_related('user'),
+            code=sms_code,
+            user_id=user_id,
+            is_activated=False,
         )
 
         if ac.is_expired:
