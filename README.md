@@ -8,7 +8,7 @@ This project supposed to run on `python3`
 This site locate [GitHub Pages](https://github.com/miha-pavel/currency_exchange)
 
 
-## Before first launch
+## Before first launchac
 ```
 1. python3 -m venv env
 2. . env/bin/activate
@@ -149,7 +149,6 @@ https://ccbv.co.uk/projects/Django/3.0/django.views.generic.edit/CreateView/
 
 (https://api.privatbank.ua/#p24/exchangeArchive)
 
-
 ### Домашнее задание 22
 Добавлено: 23.03.2020 11:21
 Создать флоу реистрации с помощью СМС.
@@ -160,3 +159,11 @@ https://ccbv.co.uk/projects/Django/3.0/django.views.generic.edit/CreateView/
 3. [x] Форма подтверждения кода.
 
 Код должен содержать не менее 4х случайных целых числа.
+
+
+### Домашнее задание 23
+Добавлено: 27.03.2020 14:14
+Реализовать функционал
+1. [x] Добавить фильтрацию на вью /rates/ GET. Поля для фильтрации: created - exact, lt, lte, gt, gte + BONUS range, source - exact, currency - exact
+2. [x] Реалтзовать функционал для ContactUs модели по аналогии rates. Отсылать письмо при сохранении обькта в базу. Показывать только записи связанные с request юзером.
+3. [x] BONUS, добавть юнит тесты для АПИ.
