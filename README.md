@@ -8,7 +8,7 @@ This project supposed to run on `python3`
 This site locate [GitHub Pages](https://github.com/miha-pavel/currency_exchange)
 
 
-## Before first launch
+## Before first launchac
 ```
 1. python3 -m venv env
 2. . env/bin/activate
